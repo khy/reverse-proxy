@@ -1,0 +1,29 @@
+#!/bin/bash
+
+docker run -it --rm --name letsencrypt \
+  -v "/etc/letsencrypt:/etc/letsencrypt" \
+  -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
+  -v "/var/www:/var/www" \
+  quay.io/letsencrypt/letsencrypt \
+  certonly \
+  --webroot \
+  -w /var/www/granmal \
+  -d granmal.com \
+  --agree-tos \
+  --renew-by-default \
+  -m khy@me.com
+
+docker run -it --rm --name letsencrypt \
+  -v "/etc/letsencrypt:/etc/letsencrypt" \
+  -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
+  -v "/var/www:/var/www" \
+  quay.io/letsencrypt/letsencrypt \
+  certonly \
+  --webroot \
+  -w /var/www/useless \
+  -d useless.io \
+  --agree-tos \
+  --renew-by-default \
+  -m khy@me.com
+
+docker ps | grep reverse-proxy | awk '{print $1}' | xargs docker restart

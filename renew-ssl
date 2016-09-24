@@ -13,6 +13,9 @@ docker run -it --rm --name letsencrypt \
   --renew-by-default \
   -m khy@me.com
 
+# Warning: this for some reason produces files such as
+# /etc/letsencrypt/live/useless.io-0001, and I'm not sure why.
+# Files with these kind of names will cause this image not to start up.
 docker run -it --rm --name letsencrypt \
   -v "/etc/letsencrypt:/etc/letsencrypt" \
   -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \

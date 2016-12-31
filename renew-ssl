@@ -15,7 +15,16 @@ docker run -it --rm --name letsencrypt \
 
 # Warning: this for some reason produces files such as
 # /etc/letsencrypt/live/useless.io-0001, and I'm not sure why.
-# Files with these kind of names will cause this image not to start up.
+# Files with these kind of names will cause this image not to start up -
+# you'll have to do
+#   mv /etc/letsencrypt/live/useless.io-0001 /etc/letsencrypt/live/useless.io
+#
+# If you get an error like this
+#   IOError: [Errno 2] No such file or directory: '/etc/letsencrypt/archive/useless.io/privkey2.pem'
+# remove directories with the '-000x' suffices. E.g.
+#   - rm -rf /etc/letsencrypt/archive/useless.io-0002/
+#   - rm /etc/letsencrypt/renewal/useless.io-000*
+#   - rm -rf /var/www/useless/.well-known/
 docker run -it --rm --name letsencrypt \
   -v "/etc/letsencrypt:/etc/letsencrypt" \
   -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
